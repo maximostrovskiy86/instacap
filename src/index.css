@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+html,
+body {
+  height: 100%;
+}
+
+.btn-green {
+  @apply flex items-center justify-center gap-2 text-black text-xxs tracking-widest bg-green hover:bg-green-tinted font-bold rounded-lg flex-initial min-w-min h-9 pt-px px-6 whitespace-nowrap;
+}
+.btn-gray {
+  @apply flex items-center justify-center gap-2 text-black text-xxs tracking-widest bg-gray-200 hover:bg-green-tinted font-bold rounded-lg flex-initial min-w-min h-9 pt-px px-6 whitespace-nowrap;
+}
+.btn-outline {
+  @apply flex items-center justify-center gap-2 text-black text-xxs tracking-widest bg-white hover:bg-gray-100 font-bold rounded-lg border-solid border-2 border-black flex-initial min-w-min h-9 pt-px px-6 whitespace-nowrap;
+}
+.btn-green-outline {
+  @apply flex items-center justify-center gap-2 text-black text-xxxs tracking-widest bg-green hover:bg-green-tinted font-bold rounded-lg border-solid border-2 border-black flex-initial min-w-min h-9 px-6 whitespace-nowrap;
+}
+.btn-black {
+  @apply flex items-center justify-center gap-2 text-white text-xxs tracking-widest bg-black hover:bg-gray-800 font-medium rounded-lg border-solid border-2 border-black flex-initial min-w-min h-9 pt-px px-6 whitespace-nowrap;
+}
+.header1-bold {
+  @apply font-sans text-xl font-bold leading-normal truncate;
+}
+.header1 {
+  @apply font-sans text-2.5xl w-full truncate;
+}
+.subtext-grey-sm {
+  @apply text-sm w-full text-gray-400 truncate sm:w-10/12;
+}
+.subtext-grey-xs {
+  @apply font-sans text-xs leading-normal text-gray-400;
+}
+.subtext-grey-xxs {
+  @apply font-sans text-xxs leading-normal text-gray-400;
+}
+.badge-grey {
+  @apply inline-flex items-center justify-center ml-2 px-2 py-1 text-xs font-bold leading-none text-white bg-gray-400 rounded-full h-4;
+}
+.badge-grey-bigger {
+  @apply inline-flex items-center justify-center ml-2 px-2 py-2 text-xs leading-none text-white bg-gray-400 rounded-full h-4;
+}
+.badge-comment {
+  @apply border-solid border-1 border-white text-xxs text-white px-2 pt-px flex justify-center items-center w-5 h-5 rounded-tl-2xl rounded-tr-2xl rounded-br-2xl rounded-bl-md bg-gray-400;
+}
+.badge-comment-outline {
+  @apply text-xs text-black border-solid border-2.5 border-black px-2 flex justify-center items-center w-6 h-6 rounded-tl-2xl rounded-tr-2xl rounded-br-2xl rounded-bl-md;
+}
+.tooltip {
+    @apply invisible absolute flex items-center justify-center rounded-md shadow-lg pt-0.5 pb-0.5 pl-2 pr-2 leading-tight bg-black bg-opacity-70 text-white text-xxs tracking-wider;
+}
+.tooltip-notuppercase {
+  @apply invisible absolute flex items-center justify-center rounded-md shadow-lg pt-0.5 pb-0.5 pl-2 pr-2 bg-black bg-opacity-70 text-white text-xxs;
+}
+.has-tooltip:hover .tooltip, .has-tooltip:hover .tooltip-notuppercase {
+    @apply visible z-50 delay-200;
+
+}
+.filepond--wrapper, .filepond--browser, .filepond--drop-label, .filepond--panel, .filepond--root, .filepond--hopper, .filepond--panel-root {
+  @apply w-full h-full bg-transparent;
+}
+
+.filepond--panel-root{
+  @apply bg-white cursor-pointer !important;
+}
+.filepond--drop-label {
+  @apply h-full rounded-lg bg-black text-white bg-opacity-80 text-opacity-80 cursor-pointer !important;
+}
+.filepond--credits{
+  @apply hidden;
+}
+  
