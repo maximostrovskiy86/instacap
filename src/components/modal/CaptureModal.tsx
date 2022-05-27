@@ -7,15 +7,19 @@ import {
   currentCaptureInfoState,
 } from '@/state/captureState';
 
-import { useFunction } from '@/hooks/useFunction';
+// import { useFunction } from '@/hooks/useFunction';
 import { useInvitation } from '@/hooks/useInvitation';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+interface Props {
+  copyLinkToClipboard: () => void;
+}
+
 const emailSchema =
   /^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))$/;
 
-const CaptureModal = () => {
+const CaptureModal = ({ copyLinkToClipboard }: Props) => {
   const [copyLink, setCopyLink] = useState<boolean>(false);
   const [emailValue, setEmailValue] = useState<string>('');
   const [successEmail, setSuccessEmail] = useState<string[]>([]);
@@ -26,7 +30,11 @@ const CaptureModal = () => {
   const captureIsPublicGroup = useRecoilValue(captureIsPublicGroupState);
   // const captureListAtHost = useRecoilValue(captureListAtHostState);
   // const { copyLinkToClipboard, copyGroupLinkToClipboard } = useFunction();
-  const { copyLinkToClipboard } = useFunction();
+  // const { copyLinkToClipboard } = useFunction();
+
+  console.log('captureIsPublic', captureIsPublic);
+  console.log('captureIsPublicGroup', captureIsPublicGroup);
+  console.log('currentCaptureInfo', currentCaptureInfo);
 
   const onHandleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -85,65 +93,66 @@ const CaptureModal = () => {
   return (
     <>
       {currentCaptureInfo?.type !== 'pdf' && (
-        <form className="flex flex-row items-end mt-12">
-          <label className="w-full block" htmlFor="copy">
-            <span className="block text-xs mb-2">Copy & share this link</span>
-            <input
-              className="h-10 p-2 text-xs w-full rounded-l-lg border-black outline-0 border-0 text-black"
-              type="text"
-              placeholder={`${window.location}`}
-              // value={`${window.location}`}
-            />
-          </label>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              copyLinkToClipboard();
-              setCopyLink(true);
-            }}
-            className="bg-dark-blue block h-10 uppercase font-bold group gap-2 rounded-r-lg items-center px-2 py-2 text-xxs tracking-wider hover:text-black hover:bg-green"
-          >
-            <span className="max-w-56 whitespace-nowrap truncate .. ">
-              {copyLink ? 'Copied' : 'Copy'}
-            </span>
-          </button>
-        </form>
-      )}
-      {(!captureIsPublic || captureIsPublicGroup) && (
-        <form className="flex items-end h-9 mt-12">
-          <label className="w-full ">
-            <span className="block text-xs mb-2">Invite with email</span>
-            <input
-              className="h-10 p-2 text-xs w-full rounded-l-lg color-black border-black text-black"
-              type="text"
-              placeholder="Enter the email"
-              name="email"
-              value={emailValue}
-              onChange={onHandleChange}
-            />
-          </label>
-          <button
-            onClick={sendEmailInvite}
-            className="bg-dark-blue h-10 uppercase font-bold group gap-2 rounded-r-lg items-center px-2 py-2 text-xxs tracking-wider hover:text-black hover:bg-green"
-          >
-            <span className="max-w-56 whitespace-nowrap truncate .. ">
-              Invite
-            </span>
-          </button>
+        <form className="flex flex-col items-end mt-12">
+          <div className="flex w-full items-end">
+            <label className="w-full block" htmlFor="copy">
+              <span className="block text-xs mb-2">Copy & share this link</span>
+              <input
+                className="h-10 p-2 text-xs w-full rounded-l-lg border-black outline-0 border-0 text-black"
+                type="text"
+                placeholder={`${window.location}`}
+              />
+            </label>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                copyLinkToClipboard();
+                setCopyLink(true);
+              }}
+              className="bg-dark-blue block h-10 uppercase font-bold group gap-2 rounded-r-lg items-center px-2 py-2 text-xxs tracking-wider hover:text-black hover:bg-green"
+            >
+              <span className="max-w-56 whitespace-nowrap truncate .. ">
+                {copyLink ? 'Copied' : 'Copy'}
+              </span>
+            </button>
+          </div>
+          <div className="flex w-full items-end">
+            <label className="w-full">
+              <span className="block text-xs mb-2">Invite with email</span>
+              <input
+                className="h-10 p-2 text-xs w-full rounded-l-lg color-black border-black text-black"
+                type="text"
+                placeholder="Enter the email"
+                name="email"
+                value={emailValue}
+                onChange={onHandleChange}
+              />
+            </label>
+            <button
+              onClick={sendEmailInvite}
+              className="bg-dark-blue h-10 uppercase font-bold group gap-2 rounded-r-lg items-center px-2 py-2 text-xxs tracking-wider hover:text-black hover:bg-green"
+            >
+              <span className="max-w-56 whitespace-nowrap truncate .. ">
+                Invite
+              </span>
+            </button>
+          </div>
         </form>
       )}
       <div className="mt-6">
         {!successEmail ? (
           <p>'No invites sent yet..'</p>
         ) : (
-          <ul>
+          <>
             <span className="block">Invite sent to:</span>
-            {successEmail.map((item, index) => (
-              <li className="block" key={index}>
-                {item}
-              </li>
-            ))}
-          </ul>
+            <ul>
+              {successEmail.map((item, index) => (
+                <li className="block" key={index}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </>
         )}
       </div>
     </>
