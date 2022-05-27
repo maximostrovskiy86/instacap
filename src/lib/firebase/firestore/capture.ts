@@ -17,6 +17,7 @@ import {
 import { nanoid } from 'nanoid';
 
 const DB_PREFIX = 'instacap/captures';
+const DB_INVITE_PREFIX = 'instacap/invite';
 
 export const saveCapture = async (uid: string, cid: string, data: any) => {
   try {
@@ -241,6 +242,36 @@ export const deleteCapture = async (uid: string, cid: string) => {
   const db = getFirestore();
   const docRef = doc(db, `${DB_PREFIX}/${uid}/${cid}`);
   await deleteDoc(docRef);
+};
+
+export const setCaptureInvite = async (
+  uid: string,
+  cid: string,
+  data: Capture.InvitationData
+) => {
+  // @ts-ignore
+  const { updatedAt, invitation } = data;
+
+  try {
+    const db = getFirestore();
+    const docRef = doc(db, `${DB_INVITE_PREFIX}/${uid}/${cid}`);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      await updateDoc(docRef, {
+        updatedAt,
+        invitations: arrayUnion(invitation),
+      });
+    } else {
+      await setDoc(docRef, {
+        updatedAt,
+        invitations: [invitation],
+      });
+    }
+    return { message: 'Invitations added to the database successfully' };
+  } catch (err) {
+    console.error('Setting capture invitetion error:', err);
+  }
 };
 
 export const addViewer = async (

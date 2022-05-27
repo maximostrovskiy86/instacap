@@ -52,3 +52,23 @@ export const sendPostForReply = async (
     console.error('Error set post: ', error);
   }
 };
+
+export const sendPostForInvite = async (
+  emails: string[],
+  sender: UserInfoForPost
+) => {
+  try {
+    const db = getFirestore();
+    const colRef = collection(db, DB_PREFIX);
+    const docRef = doc(colRef, nanoid());
+    setDoc(docRef, {
+      to: emails,
+      message: {
+        subject: `💬 Your comments are needed by ${sender.email}`,
+        html: `You have been invited to by ${sender.email} to collaborate on a Capture board.<br /><br />They are waiting for your feedback!<br /><br />No registration required.<br /><br />Please click here to view the <a href='${window.location.href}'>Capture board</a>`,
+      },
+    });
+  } catch (error) {
+    console.error('Error set post:', error);
+  }
+};

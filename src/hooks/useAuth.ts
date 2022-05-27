@@ -4,7 +4,8 @@ import { currentUserIDState, currentUserInfoState } from '@/state/userState';
 import * as firebase from '@/lib/firebase/auth';
 import * as firestore from '@/lib/firebase/firestore';
 import { isNeedEmailState } from '@/state/userState';
-import type { User } from 'firebase/auth';
+// import type { User } from 'firebase/auth';
+import { User } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { syncWithExtensionState } from '@/state/uiState';
 import { useIntercom } from './useIntercom';
@@ -33,6 +34,8 @@ export const useAuth = () => {
     setCurrentUserInfo(user.toJSON());
     intercom.setting(user.toJSON());
   };
+
+  console.log('navigate', navigate);
 
   const linkToGoogle = (cb?: Function) => {
     setIsReady(false);

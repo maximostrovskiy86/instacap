@@ -66,4 +66,10 @@ declare namespace Capture {
     modifyType: CommentModifyType;
     timestamp: number;
   };
+
+  export interface Invitation {
+  }
+
+  export class InvitationData {
+  }
 }

@@ -18,6 +18,10 @@ const Auth: FC = () => {
   );
   const { isReady, init, getStoredUserInfo, setAvatar } = useAuth();
   const mixpanel = useMixpanel();
+  console.log('isCheckExtension,', isCheckExtension);
+  console.log('isCheckExtensionState,', isCheckExtensionState);
+  console.log('isReady,', isReady);
+  console.log('init,', init);
 
   useEffect(() => {
     chromeExtension.init(() => {
